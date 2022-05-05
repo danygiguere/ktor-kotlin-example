@@ -44,9 +44,9 @@
 
 #### Todo
 - create `user has many posts` relationship
+- figure out a way to remigrate the db and the seeds : https://medium.com/nerd-for-tech/an-opinionated-kotlin-backend-service-database-migration-orm-52527ce3228
 - install cors - https://ktor.io/docs/eap/cors.html#overview
 - create demos for joins, db transactions
-- figure out a way to remigrate the db and the seeds : https://medium.com/nerd-for-tech/an-opinionated-kotlin-backend-service-database-migration-orm-52527ce3228
 - create some tests
 - figure how to reset the test db before each test
 - figure how to run the tests as transactions, so the data is not committed in the db
