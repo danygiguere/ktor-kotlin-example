@@ -45,7 +45,9 @@
 
 #### Todo
 - create `user has many posts` relationship
+- create exposed raw query
 - figure out a way to remigrate the db and the seeds : https://medium.com/nerd-for-tech/an-opinionated-kotlin-backend-service-database-migration-orm-52527ce3228
+- create isAuthenticated middleware
 - install cors - https://ktor.io/docs/eap/cors.html#overview
 - create demos for joins, db transactions
 - create some tests
@@ -53,4 +55,3 @@
 - figure how to run the tests as transactions, so the data is not committed in the db
 - install swagger : https://ktor.io/docs/eap/openapi-swagger.html
 - implement websockets
-- create isAuthenticated middleware
