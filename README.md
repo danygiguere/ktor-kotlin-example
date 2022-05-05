@@ -37,23 +37,15 @@
 - create demos for logs
 
 #### In progress
-- refactor validators
-* in Validator.kt:
-  - @todo: move translation texts to .json files
-  - @todo rules : date, before:date, boolean, digits:value, email, in:foo,bar, integer, notIn:foo,bar, regex:pattern, string, requiredIf:anotherfield,value, image:jpeg,png,jpg,gif,svg, unique:users,email
+- refactor validators. in Validator.kt:
   - @todo: Figure out how to bind the locale to the service container with Koin or Kodein
-* in PostCreateRequest.kt:
-  - @todo: implement a create function that will throw the exception instead of doing it in PostCreateRequest. ie:
-  ```kotlin
-  Validator.create(mapOf(
-       "title" to Validator.rules(arrayOf("minLength:2", "maxLength:100"), payload.title, arrayOf("en:title", "fr:titre"), locale),
-       "body" to Validator.rules(arrayOf("minLength:2", "maxLength:100"), payload.body, arrayOf("en:body", "fr:contenu"), locale)
-  ))
+  - @todo rules : date, before:date, boolean, digits:value, email, in:foo,bar, integer, notIn:foo,bar, regex:pattern, string, requiredIf:anotherfield,value, image:jpeg,png,jpg,gif,svg, unique:users,email
+  - @todo: move translation texts to .json files
 
 #### Todo
+- create `user has many posts` relationship
 - install cors - https://ktor.io/docs/eap/cors.html#overview
 - create demos for joins, db transactions
-- create `user has many posts` relationship
 - figure out a way to remigrate the db and the seeds : https://medium.com/nerd-for-tech/an-opinionated-kotlin-backend-service-database-migration-orm-52527ce3228
 - create some tests
 - figure how to reset the test db before each test

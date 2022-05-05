@@ -1,6 +1,5 @@
 package com.blog.requests
 
-import com.blog.plugins.UnprocessableEntityException
 import com.blog.utils.I18n
 import com.blog.utils.Validator
 import io.ktor.server.application.*
