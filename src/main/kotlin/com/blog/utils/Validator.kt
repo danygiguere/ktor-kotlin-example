@@ -1,5 +1,6 @@
 package com.blog.utils
 
+import com.blog.plugins.UnprocessableEntityException
 import com.blog.rules.MaxLength
 import com.blog.rules.MinLength
 import com.blog.rules.Required
@@ -27,5 +28,16 @@ object Validator {
             array = MaxLength(key, field, value, locale, fieldName, array).check()
         }
         return array
+    }
+
+    fun run(titleArray: MutableList<String>, bodyArray: MutableList<String>) {
+        if (titleArray.size > 0 || bodyArray.size > 0) {
+            throw UnprocessableEntityException(
+                mapOf(
+                    "title" to titleArray,
+                    "body" to bodyArray
+                )
+            )
+        }
     }
 }

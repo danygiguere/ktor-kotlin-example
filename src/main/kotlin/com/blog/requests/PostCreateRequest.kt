@@ -20,18 +20,9 @@ object PostCreateRequest {
     }
 
     fun validate(payload:PostCreatePayload, locale: String): PostCreatePayload {
-
         val titleArray = Validator.check(payload.title, arrayOf("minLength:2", "maxLength:100"), locale, arrayOf("en:title", "fr:titre"))
         val bodyArray = Validator.check(payload.body, arrayOf("required", "maxLength:100"), locale, arrayOf("en:body", "fr:contenu"))
-
-        if (titleArray.size > 0 || bodyArray.size > 0) {
-             throw UnprocessableEntityException(
-                  mapOf(
-                      "title" to titleArray,
-                      "body" to bodyArray
-                  )
-             )
-        }
+        Validator.run(titleArray, bodyArray)
         return payload
     }
 
