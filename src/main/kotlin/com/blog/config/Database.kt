@@ -25,8 +25,8 @@ object Database {
             user = dbUser, password = dbPassword)
 
         transaction(database) {
-            SchemaUtils.create(Posts)
             SchemaUtils.create(Users)
+            SchemaUtils.create(Posts)
         }
     }
 

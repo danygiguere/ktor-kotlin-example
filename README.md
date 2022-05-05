@@ -41,6 +41,7 @@
   - @todo: Figure out how to bind the locale to the service container with Koin or Kodein
   - @todo rules : date, before:date, boolean, digits:value, email, in:foo,bar, integer, notIn:foo,bar, regex:pattern, string, requiredIf:anotherfield,value, image:jpeg,png,jpg,gif,svg, unique:users,email
   - @todo: move translation texts to .json files
+  - create Rule class and the rules like MaxLength will extend Rule
 
 #### Todo
 - create `user has many posts` relationship
