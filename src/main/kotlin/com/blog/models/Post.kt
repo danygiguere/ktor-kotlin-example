@@ -17,3 +17,15 @@ object Posts : Table() {
 
     override val primaryKey = PrimaryKey(id)
 }
+
+//object Posts: IntIdTable() {
+//    val user = reference("user", Users)
+//    val title = varchar("title", 128)
+//    val body = varchar("password", 1024)
+//}
+//class Post(id: EntityID<Int>,  user: EntityID<Int>, title: String, body: String): IntEntity(id) {
+//    companion object : IntEntityClass<Post>(Posts)
+//    var user by User referencedOn Posts.user
+//    var title by Posts.title
+//    var body by Posts.body
+//}

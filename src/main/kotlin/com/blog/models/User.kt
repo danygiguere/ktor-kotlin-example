@@ -27,7 +27,8 @@ object Users : Table() {
 //    val email = varchar("email", 128)
 //    val password = varchar("password", 1024)
 //}
-//class User(id: EntityID<Int>): IntEntity(id) {
+//
+//class User(id: EntityID<Int>, username: String, email: String, password: String): IntEntity(id) {
 //    companion object : IntEntityClass<User>(Users)
 //    var username by Users.username
 //    var email by Users.email
