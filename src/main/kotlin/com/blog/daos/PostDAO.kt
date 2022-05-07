@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.*
 class PostDAO  {
     private fun resultRowToPost(row: ResultRow) = Post(
         id = row[Posts.id],
-        userId = row[Posts.userId],
+        user = row[Posts.user],
         title = row[Posts.title],
         body = row[Posts.body]
     )
@@ -23,9 +23,9 @@ class PostDAO  {
             .singleOrNull()
     }
 
-    suspend fun create(userId: Int, title: String, body: String): Post? = dbQuery {
+    suspend fun create(user: Int, title: String, body: String): Post? = dbQuery {
         val insertStatement = Posts.insert {
-            it[Posts.userId] = userId
+            it[Posts.user] = user
             it[Posts.title] = title
             it[Posts.body] = body
         }
