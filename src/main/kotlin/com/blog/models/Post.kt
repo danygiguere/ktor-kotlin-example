@@ -1,5 +1,9 @@
 package com.blog.models
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.dao.IntEntity
+import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
 
 @Serializable
@@ -23,7 +27,7 @@ object Posts : Table() {
 //    val title = varchar("title", 128)
 //    val body = varchar("password", 1024)
 //}
-//class Post(id: EntityID<Int>,  user: EntityID<Int>, title: String, body: String): IntEntity(id) {
+//class Post(id: EntityID<Int>, user: EntityID<Int>, title: String, body: String): IntEntity(id) {
 //    companion object : IntEntityClass<Post>(Posts)
 //    var user by User referencedOn Posts.user
 //    var title by Posts.title
