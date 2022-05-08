@@ -9,5 +9,6 @@ fun Application.registerRoutes() {
         authRoutes()
         userRoutes()
         postRoutes()
+        carRoutes()
     }
 }

@@ -27,6 +27,7 @@ object Database {
         transaction(database) {
             SchemaUtils.create(Users)
             SchemaUtils.create(Posts)
+            SchemaUtils.create(Cars)
         }
     }
 
