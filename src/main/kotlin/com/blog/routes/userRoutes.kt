@@ -16,6 +16,7 @@ fun Application.userRoutes() {
 
         get("/users/{id}") {
             val id = call.parameters.getOrFail<Int>("id").toInt()
+            call.respond(mapOf("users" to userDAO.show(id)))
             call.respondText("This is a text response from userRoutes for user id ${id}")
         }
     }

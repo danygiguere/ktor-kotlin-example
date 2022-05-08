@@ -1,6 +1,7 @@
 package com.blog.routes
 
 import com.blog.middlewares.hasSignedUrlMiddleware
+import com.blog.models.User
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -45,6 +46,10 @@ fun Application.demoRoutes() {
             log.info(call.parameters["id"]) // /demo/logger/1
             log.info(call.request.queryParameters["name"]) // ?name=john
             call.respondText("This is a text response from demoRoutes@/demo/logger")
+        }
+
+        get("/demo/exposed") {
+            call.respondText("This is a text response from demoRoutes@/exposed")
         }
     }
 }
