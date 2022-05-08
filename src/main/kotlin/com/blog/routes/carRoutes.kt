@@ -32,7 +32,7 @@ fun Application.carRoutes() {
         post("/cars") {
             val car = transaction {
                 Car.new {
-                    name = "The Last Jedi"
+                    name = "Tesla"
                     year = 2022
                 }
             }
