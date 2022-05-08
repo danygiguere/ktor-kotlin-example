@@ -9,9 +9,6 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 
-//@Serializable
-class SerializedCar(id: EntityID<Int>, name: String, year: Int): IntEntity(id)
-
 class CarDAO {
     private fun resultRowToCar(row: ResultRow) = SerializedCar(
         id = row[Cars.id],

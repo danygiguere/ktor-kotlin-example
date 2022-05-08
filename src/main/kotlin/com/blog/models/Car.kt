@@ -11,8 +11,11 @@ object Cars: IntIdTable() {
     val year = integer("year")
 }
 
-class Car(id: EntityID<Int>, name: String, year: Int): IntEntity(id) {
+class Car(id: EntityID<Int>): IntEntity(id) {
     companion object : IntEntityClass<Car>(Cars)
     var name by Cars.name
     var year by Cars.year
 }
+
+//@Serializable
+class SerializedCar(id: EntityID<Int>, name: String, year: Int): IntEntity(id)
