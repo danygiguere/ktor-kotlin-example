@@ -15,13 +15,17 @@ fun Application.carRoutes() {
 //        get("/cars") {
 //            call.respond(mapOf("cars" to carDAO.all()))
 //        }
-//
-        get("/cars/{id}") {
-            val id = call.parameters.getOrFail<Int>("id").toInt()
+
+//        get("/cars/{id}") {
+//            val id = call.parameters.getOrFail<Int>("id").toInt()
 //            val car = transaction {
 //                Car.findById(id)
 //            }
 //            call.respond(mapOf("car" to car.toString()))
+//        }
+
+        get("/cars/{id}") {
+            val id = call.parameters.getOrFail<Int>("id").toInt()
             call.respond(mapOf("car" to carDAO.show(id)))
         }
 
