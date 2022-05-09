@@ -2,24 +2,32 @@ package com.blog.daos
 
 import com.blog.config.Database.dbQuery
 import com.blog.models.*
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
-import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
 
 class CarDAO {
-    private fun resultRowToCar(row: ResultRow) = SerializedCar(
-        id = row[Cars.id],
-        name = row[Cars.name],
-        year = row[Cars.year]
-    )
 
-    suspend fun show(id: Int): SerializedCar? = transaction {
-        Cars
-            .select { Cars.id eq id }
-            .map(::resultRowToCar)
-            .singleOrNull()
+    suspend fun all(): Iterable<Car> = dbQuery {
+        CarEntity.all().map(CarEntity::toModel)
     }
+
+    suspend fun show(id: Int) = dbQuery {
+        CarEntity[id].toModel()
+    }
+
+    suspend fun create(car: NewCar) = dbQuery {
+       CarEntity.new {
+            this.name = car.name
+            this.year = car.year
+        }.toModel()
+    }
+
+    suspend fun update(id: Int, car: NewCar) = dbQuery {
+        CarEntity[id].name = car.name
+        CarEntity[id].year = car.year
+        CarEntity[id].toModel()
+    }
+
+    suspend fun delete(id: Int) = dbQuery {
+        CarEntity[id].delete()
+    }
+
 }

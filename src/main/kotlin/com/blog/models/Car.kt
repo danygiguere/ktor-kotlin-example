@@ -11,11 +11,23 @@ object Cars: IntIdTable() {
     val year = integer("year")
 }
 
-class Car(id: EntityID<Int>): IntEntity(id) {
-    companion object : IntEntityClass<Car>(Cars)
+class CarEntity(id: EntityID<Int>): IntEntity(id) {
+    companion object : IntEntityClass<CarEntity>(Cars)
     var name by Cars.name
     var year by Cars.year
+
+    fun toModel() = Car(id.value, name, year)
 }
 
-//@Serializable
-class SerializedCar(id: EntityID<Int>, name: String, year: Int): IntEntity(id)
+@Serializable
+data class Car(
+    val id: Int,
+    val name: String,
+    val year: Int
+)
+
+@Serializable
+data class NewCar(
+    val name: String,
+    val year: Int
+)

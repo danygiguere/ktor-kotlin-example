@@ -1,42 +1,40 @@
 package com.blog.routes
 
 import com.blog.daos.CarDAO
-import com.blog.models.Car
+import com.blog.models.NewCar
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.carRoutes() {
     routing {
         val carDAO = CarDAO()
 
-//        get("/cars") {
-//            call.respond(mapOf("cars" to carDAO.all()))
-//        }
-
-//        get("/cars/{id}") {
-//            val id = call.parameters.getOrFail<Int>("id").toInt()
-//            val car = transaction {
-//                Car.findById(id)
-//            }
-//            call.respond(mapOf("car" to car.toString()))
-//        }
+        get("/cars") {
+            call.respond(carDAO.all())
+        }
 
         get("/cars/{id}") {
             val id = call.parameters.getOrFail<Int>("id").toInt()
-            call.respond(mapOf("car" to carDAO.show(id)))
+            call.respond(carDAO.show(id))
         }
 
         post("/cars") {
-            val car = transaction {
-                Car.new {
-                    name = "Tesla"
-                    year = 2022
-                }
-            }
-            call.respondText("You just created a new car with the id: ${car. id}")
+            val car = call.receive<NewCar>()
+            call.respond(carDAO.create(car))
+        }
+
+        put("cars/{id}") {
+            val id = call.parameters.getOrFail<Int>("id").toInt()
+            val car = call.receive<NewCar>()
+            call.respond(carDAO.update(id, car))
+        }
+
+        delete("/cars/{id}") {
+            val id = call.parameters.getOrFail<Int>("id").toInt()
+            call.respond(carDAO.delete(id))
         }
     }
 }
