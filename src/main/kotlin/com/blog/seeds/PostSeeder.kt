@@ -1,14 +1,14 @@
 package com.blog.seeds
 
-import com.blog.daos.PostDAO
+import com.blog.dsls.PostDSL
 import kotlinx.coroutines.runBlocking
 
 class PostSeeder() {
      fun run() {
-         val postDAO: PostDAO = PostDAO()
+         val postDSL: PostDSL = PostDSL()
          runBlocking {
-             if(postDAO.all().isEmpty()) {
-                 postDAO.create(1,"The drive to develop!", "...it's what keeps me going.")
+             if(postDSL.all().isEmpty()) {
+                 postDSL.create(1,"The drive to develop!", "...it's what keeps me going.")
              }
          }
      }

@@ -1,10 +1,10 @@
-package com.blog.daos
+package com.blog.dsls
 
 import com.blog.config.Database.dbQuery
 import com.blog.models.*
 import org.jetbrains.exposed.sql.*
 
-class UserDAO {
+class UserDSL {
     private fun resultRowToUser(row: ResultRow) = User(
         id = row[Users.id],
         username = row[Users.username],
