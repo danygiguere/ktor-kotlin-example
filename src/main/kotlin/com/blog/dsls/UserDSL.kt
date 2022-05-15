@@ -5,21 +5,14 @@ import com.blog.models.*
 import org.jetbrains.exposed.sql.*
 
 class UserDSL {
-    private fun resultRowToUser(row: ResultRow) = User(
-        id = row[Users.id],
-        username = row[Users.username],
-        email = row[Users.email],
-        password = row[Users.password]
-    )
-
     suspend fun all(): List<User> = dbQuery {
-        Users.selectAll().map(::resultRowToUser)
+        Users.selectAll().map(Users::resultRowToUser)
     }
 
     suspend fun show(id: Int): User? = dbQuery {
         Users
             .select { Users.id eq id }
-            .map(::resultRowToUser)
+            .map(Users::resultRowToUser)
             .singleOrNull()
     }
 
@@ -29,7 +22,7 @@ class UserDSL {
             it[Users.email] = email
             it[Users.password] = password
         }
-        insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToUser)
+        insertStatement.resultedValues?.singleOrNull()?.let(Users::resultRowToUser)
     }
 
     suspend fun update(id: Int, username: String, email: String, password: String): Boolean = dbQuery {

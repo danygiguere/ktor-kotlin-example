@@ -5,31 +5,24 @@ import com.blog.models.*
 import org.jetbrains.exposed.sql.*
 
 class PostDSL  {
-    private fun resultRowToPost(row: ResultRow) = Post(
-        id = row[Posts.id],
-        user = row[Posts.user],
-        title = row[Posts.title],
-        body = row[Posts.body]
-    )
-
     suspend fun all(): List<Post> = dbQuery {
-        Posts.selectAll().map(::resultRowToPost)
+        Posts.selectAll().map(Posts::resultRowToPost)
     }
 
     suspend fun show(id: Int): Post? = dbQuery {
         Posts
             .select { Posts.id eq id }
-            .map(::resultRowToPost)
+            .map(Posts::resultRowToPost)
             .singleOrNull()
     }
 
     suspend fun create(user: Int, title: String, body: String): Post? = dbQuery {
         val insertStatement = Posts.insert {
-            it[Posts.user] = user
+            it[Posts.userId] = user
             it[Posts.title] = title
             it[Posts.body] = body
         }
-        insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToPost)
+        insertStatement.resultedValues?.singleOrNull()?.let(Posts::resultRowToPost)
     }
 
     suspend fun update(id: Int, title: String, body: String): Boolean = dbQuery {

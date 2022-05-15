@@ -1,35 +1,26 @@
 package com.blog.models
 import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
-
-@Serializable
-data class Post(
-    val id: Int? = null,
-    val user: Int,
-    val title: String,
-    val body: String)
 
 object Posts : Table() {
     val id = integer("id").autoIncrement()
-    val user = reference("user", Users.id, ReferenceOption.CASCADE)
+    val userId = (integer("user_id") references Users.id)
     val title = varchar("title", 128)
     val body = varchar("body", 1024)
 
     override val primaryKey = PrimaryKey(id)
+
+    fun resultRowToPost(row: ResultRow) = Post(
+        id = row[this.id],
+        userId = row[this.userId],
+        title = row[this.title],
+        body = row[this.body]
+    )
 }
 
-//object Posts: IntIdTable() {
-//    val user = reference("user", Users)
-//    val title = varchar("title", 128)
-//    val body = varchar("password", 1024)
-//}
-//class Post(id: EntityID<Int>, user: EntityID<Int>, title: String, body: String): IntEntity(id) {
-//    companion object : IntEntityClass<Post>(Posts)
-//    var user by User referencedOn Posts.user
-//    var title by Posts.title
-//    var body by Posts.body
-//}
+@Serializable
+data class Post(
+    val id: Int? = null,
+    val userId: Int,
+    val title: String,
+    val body: String)
