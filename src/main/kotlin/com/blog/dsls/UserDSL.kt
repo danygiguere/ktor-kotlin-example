@@ -26,7 +26,7 @@ class UserDSL {
             .select { Posts.user_id eq id }
             .map(Posts::resultRowToPost)
 
-        user?.let { UserWithPosts(user.id, it.username, user.email, user.password, posts) }
+        user?.let { UserWithPosts(user.id, user.username, user.email, user.password, posts) }
     }
 
     suspend fun create(username: String, email: String, password: String): User? = dbQuery {

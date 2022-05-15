@@ -11,7 +11,7 @@ class PostDSL  {
 
     suspend fun show(id: Int): Post? = dbQuery {
         Posts
-            .select { Posts.user_id eq id }
+            .select { Posts.id eq id }
             .map(Posts::resultRowToPost)
             .singleOrNull()
     }

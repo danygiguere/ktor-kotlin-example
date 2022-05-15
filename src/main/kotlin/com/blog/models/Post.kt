@@ -12,7 +12,7 @@ object Posts : Table() {
 
     fun resultRowToPost(row: ResultRow) = Post(
         id = row[this.id],
-        userId = row[this.user_id],
+        user_id = row[this.user_id],
         title = row[this.title],
         body = row[this.body]
     )
@@ -21,6 +21,6 @@ object Posts : Table() {
 @Serializable
 data class Post(
     val id: Int? = null,
-    val userId: Int,
+    val user_id: Int,
     val title: String,
     val body: String)
