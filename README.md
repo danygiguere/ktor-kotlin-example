@@ -35,6 +35,7 @@
 - create a middleware
 - translate validation
 - create demos for logs
+- create `user has many posts` relationship
 
 #### In progress
 - refactor validators. in Validator.kt:
@@ -44,12 +45,11 @@
   - create Rule class and the rules like MaxLength will extend Rule
 
 #### Todo
-- create `user has many posts` relationship
+- create demos for joins, db transactions
 - create exposed raw query
 - figure out a way to remigrate the db and the seeds : https://medium.com/nerd-for-tech/an-opinionated-kotlin-backend-service-database-migration-orm-52527ce3228
 - create isAuthenticated middleware
 - install cors - https://ktor.io/docs/eap/cors.html#overview
-- create demos for joins, db transactions
 - create some tests
 - figure how to reset the test db before each test
 - figure how to run the tests as transactions, so the data is not committed in the db
