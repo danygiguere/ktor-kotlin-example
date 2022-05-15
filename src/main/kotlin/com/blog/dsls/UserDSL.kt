@@ -9,12 +9,6 @@ class UserDSL {
         Users.selectAll().map(Users::resultRowToUser)
     }
 
-    suspend fun allWithPosts(): List<User> = dbQuery {
-        (Users innerJoin Posts)
-            .slice(Users.id, Users.email, Users.username, Users.password, Posts.id, Posts.userId, Posts.title, Posts.body)
-            .selectAll().map(Users::resultRowToUser)
-    }
-
     suspend fun show(id: Int): User? = dbQuery {
         Users
             .select { Users.id eq id }
@@ -22,12 +16,22 @@ class UserDSL {
             .singleOrNull()
     }
 
-    suspend fun showWithPosts(id: Int): UserWithPosts? = dbQuery {
-        (Users innerJoin Posts)
-            .slice(Users.id, Users.email, Users.username, Users.password, Posts.id, Posts.userId, Posts.title, Posts.body)
+    suspend fun showWithPosts(id: Int): Unit = dbQuery {
+        val user = Users
             .select { Users.id eq id }
-            .map(Users::resultRowToUserWithPosts)
+            .map(Users::resultRowToUser)
             .singleOrNull()
+
+        val posts = Posts
+            .select { Posts.userId eq id }
+            .map(Posts::resultRowToPost)
+            .singleOrNull()
+
+        if (user != null && posts != null) {
+            UserWithPosts(user.id, user.username, user.email, user.password, posts)
+        } else if(user != null){
+            User(user.id, user.username, user.email, user.password)
+        }
     }
 
     suspend fun create(username: String, email: String, password: String): User? = dbQuery {

@@ -16,14 +16,6 @@ object Users : Table() {
         email = row[this.email],
         password = row[this.password]
     )
-
-    fun resultRowToUserWithPosts(row: ResultRow) = UserWithPosts(
-        id = row[this.id],
-        username = row[this.username],
-        email = row[this.email],
-        password = row[this.password],
-        posts = Post(row[Posts.id], row[this.id], row[Posts.title], row[Posts.body])
-    )
 }
 
 @Serializable
@@ -39,4 +31,5 @@ data class UserWithPosts(
     val username: String,
     val email: String,
     val password: String,
-    val posts: Post? = null)
+    val posts: Post?
+)

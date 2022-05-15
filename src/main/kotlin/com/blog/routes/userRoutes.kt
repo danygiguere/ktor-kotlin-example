@@ -17,7 +17,7 @@ fun Application.userRoutes() {
 
         get("/users/{id}") {
             val id = call.parameters.getOrFail<Int>("id").toInt()
-            val user = userDSL.show(id)
+            val user = userDSL.showWithPosts(id)
             call.respond(mapOf("user" to user))
         }
     }
