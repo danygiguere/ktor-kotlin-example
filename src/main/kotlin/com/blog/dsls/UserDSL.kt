@@ -16,7 +16,7 @@ class UserDSL {
             .singleOrNull()
     }
 
-    suspend fun showWithPosts(id: Int): Unit = dbQuery {
+    suspend fun showWithPosts(id: Int): User? = dbQuery {
         val user = Users
             .select { Users.id eq id }
             .map(Users::resultRowToUser)
@@ -27,11 +27,7 @@ class UserDSL {
             .map(Posts::resultRowToPost)
             .singleOrNull()
 
-        if (user != null && posts != null) {
-            UserWithPosts(user.id, user.username, user.email, user.password, posts)
-        } else if(user != null){
-            User(user.id, user.username, user.email, user.password)
-        }
+        user?.let { User(user.id, it.username, user.email, user.password, posts) }
     }
 
     suspend fun create(username: String, email: String, password: String): User? = dbQuery {
