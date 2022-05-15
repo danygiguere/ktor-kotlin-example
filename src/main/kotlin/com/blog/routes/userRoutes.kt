@@ -2,6 +2,7 @@ package com.blog.routes
 
 import com.blog.dsls.UserDSL
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
@@ -16,7 +17,8 @@ fun Application.userRoutes() {
 
         get("/users/{id}") {
             val id = call.parameters.getOrFail<Int>("id").toInt()
-            call.respond(mapOf("user" to userDSL.show(id)))
+            val user = userDSL.show(id)
+            call.respond(mapOf("user" to user))
         }
     }
 }

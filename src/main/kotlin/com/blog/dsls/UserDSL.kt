@@ -9,10 +9,24 @@ class UserDSL {
         Users.selectAll().map(Users::resultRowToUser)
     }
 
+    suspend fun allWithPosts(): List<User> = dbQuery {
+        (Users innerJoin Posts)
+            .slice(Users.id, Users.email, Users.username, Users.password, Posts.id, Posts.userId, Posts.title, Posts.body)
+            .selectAll().map(Users::resultRowToUser)
+    }
+
     suspend fun show(id: Int): User? = dbQuery {
         Users
             .select { Users.id eq id }
             .map(Users::resultRowToUser)
+            .singleOrNull()
+    }
+
+    suspend fun showWithPosts(id: Int): UserWithPosts? = dbQuery {
+        (Users innerJoin Posts)
+            .slice(Users.id, Users.email, Users.username, Users.password, Posts.id, Posts.userId, Posts.title, Posts.body)
+            .select { Users.id eq id }
+            .map(Users::resultRowToUserWithPosts)
             .singleOrNull()
     }
 
