@@ -23,8 +23,7 @@ data class User(
     val id: Int? = null,
     val username: String,
     val email: String,
-    val password: String,
-    val posts: List<Post>? = null
+    val password: String
 )
 
 @Serializable
@@ -33,5 +32,5 @@ data class UserWithPosts(
     val username: String,
     val email: String,
     val password: String,
-    val posts: Post?
+    val posts: List<Post>? = null
 )

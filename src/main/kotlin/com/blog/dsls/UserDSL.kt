@@ -9,24 +9,24 @@ class UserDSL {
         Users.selectAll().map(Users::resultRowToUser)
     }
 
-    suspend fun show(id: Int): User? = dbQuery {
+    suspend fun show(id: Int): User = dbQuery {
         Users
             .select { Users.id eq id }
             .map(Users::resultRowToUser)
-            .singleOrNull()
+            .single()
     }
 
-    suspend fun showWithPosts(id: Int): User? = dbQuery {
+    suspend fun showWithPosts(id: Int): UserWithPosts = dbQuery {
         val user = Users
             .select { Users.id eq id }
             .map(Users::resultRowToUser)
-            .singleOrNull()
+            .single()
 
         val posts = Posts
             .select { Posts.user_id eq id }
             .map(Posts::resultRowToPost)
 
-        user?.let { User(user.id, it.username, user.email, user.password, posts) }
+        UserWithPosts(user.id, user.username, user.email, user.password, posts)
     }
 
     suspend fun create(username: String, email: String, password: String): User? = dbQuery {
