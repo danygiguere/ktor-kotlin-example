@@ -11,17 +11,17 @@ fun Application.userRoutes() {
         val userDSL = UserDSL()
 
         get("/users") {
-            call.respond(userDSL.all())
+            call.respond(mapOf("users" to userDSL.all()))
         }
 
         get("/users/{id}") {
             val id = call.parameters.getOrFail<Int>("id").toInt()
-            call.respond(userDSL.show(id))
+            call.respond(mapOf("user" to userDSL.show(id)))
         }
 
         get("/users/{id}/posts") {
             val id = call.parameters.getOrFail<Int>("id").toInt()
-            call.respond(userDSL.showWithPosts(id))
+            call.respond(mapOf("user" to userDSL.showWithPosts(id)))
         }
     }
 }

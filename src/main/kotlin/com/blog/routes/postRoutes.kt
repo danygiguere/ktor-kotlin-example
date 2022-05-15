@@ -13,7 +13,7 @@ fun Application.postRoutes() {
         val postDSL = PostDSL()
 
         get("/posts") {
-            call.respond(postDSL.all())
+            call.respond(mapOf("posts" to postDSL.all()))
         }
 
         get("/posts/{id}") {
