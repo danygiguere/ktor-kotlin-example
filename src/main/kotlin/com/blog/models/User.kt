@@ -24,7 +24,7 @@ data class User(
     val username: String,
     val email: String,
     val password: String,
-    val posts: Post? = null
+    val posts: List<Post>? = null
 )
 
 @Serializable

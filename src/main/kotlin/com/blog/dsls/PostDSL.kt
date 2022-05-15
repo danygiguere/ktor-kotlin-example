@@ -11,14 +11,14 @@ class PostDSL  {
 
     suspend fun show(id: Int): Post? = dbQuery {
         Posts
-            .select { Posts.id eq id }
+            .select { Posts.user_id eq id }
             .map(Posts::resultRowToPost)
             .singleOrNull()
     }
 
-    suspend fun create(user: Int, title: String, body: String): Post? = dbQuery {
+    suspend fun create(user_id: Int, title: String, body: String): Post? = dbQuery {
         val insertStatement = Posts.insert {
-            it[Posts.userId] = user
+            it[Posts.user_id] = user_id
             it[Posts.title] = title
             it[Posts.body] = body
         }

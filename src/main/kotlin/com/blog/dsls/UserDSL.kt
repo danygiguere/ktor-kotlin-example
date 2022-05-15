@@ -23,9 +23,8 @@ class UserDSL {
             .singleOrNull()
 
         val posts = Posts
-            .select { Posts.userId eq id }
+            .select { Posts.user_id eq id }
             .map(Posts::resultRowToPost)
-            .singleOrNull()
 
         user?.let { User(user.id, it.username, user.email, user.password, posts) }
     }
