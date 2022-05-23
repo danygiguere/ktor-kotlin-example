@@ -26,14 +26,14 @@ class UserDSL {
             .select { Posts.user_id eq id }
             .map(Posts::resultRowToPost)
 
-        user?.let { UserWithPosts(user.id, user.username, user.email, user.password, posts) }
+        user?.let { UserWithPosts(user.id, user.username, user.email, posts) }
     }
 
     suspend fun create(username: String, email: String, password: String): User? = dbQuery {
         val insertStatement = Users.insert {
             it[Users.username] = username
             it[Users.email] = email
-            it[Users.password] = password
+            it[Users.password] = password.toString()
         }
         insertStatement.resultedValues?.singleOrNull()?.let(Users::resultRowToUser)
     }
@@ -50,10 +50,10 @@ class UserDSL {
         Users.deleteWhere { Users.id eq id } > 0
     }
 
-    suspend fun findUserByEmail(email: String): User? = dbQuery {
+    suspend fun getPassword(email: String): String? = dbQuery {
         Users
             .select { Users.email eq email }
-            .map(Users::resultRowToUser)
+            .map(Users::getPassword)
             .singleOrNull()
     }
 }

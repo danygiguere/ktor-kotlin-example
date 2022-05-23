@@ -13,9 +13,10 @@ object Users : Table() {
     fun resultRowToUser(row: ResultRow) = User(
         id = row[this.id],
         username = row[this.username],
-        email = row[this.email],
-        password = row[this.password]
+        email = row[this.email]
     )
+
+    fun getPassword(row: ResultRow) = row[this.password]
 }
 
 @Serializable
@@ -25,7 +26,7 @@ data class AuthenticatingUser(
 )
 
 @Serializable
-data class User(
+data class NewUser(
     val id: Int? = null,
     val username: String,
     val email: String,
@@ -33,10 +34,16 @@ data class User(
 )
 
 @Serializable
+data class User(
+    val id: Int? = null,
+    val username: String,
+    val email: String
+)
+
+@Serializable
 data class UserWithPosts(
     val id: Int? = null,
     val username: String,
     val email: String,
-    val password: String,
     val posts: List<Post>? = null
 )
