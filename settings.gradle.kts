@@ -1,1 +1,1 @@
-rootProject.name = "com.blog.api"
+rootProject.name = "com.example.ktor-kotlin-example"
