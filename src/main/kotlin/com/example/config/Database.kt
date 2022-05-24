@@ -9,6 +9,11 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object Database {
+//        uncomment the lines below to use the in-memory db (and comment the mysql driver lines).
+//        val driverClassName = "org.h2.Driver"
+//        val jdbcURL = "jdbc:h2:file:./build/db"
+//        val database = Database.connect(jdbcURL, driverClassName)
+
     val dotenv = Dotenv.load();
     val dbHost = dotenv.get("DB_HOST")
     val dbPort = dotenv.get("DB_PORT")
@@ -19,13 +24,6 @@ object Database {
         user = dbUser, password = dbPassword)
 
     fun init() {
-//        uncomment the lines below to use the in-memory db (and comment the mysql driver lines).
-//        val driverClassName = "org.h2.Driver"
-//        val jdbcURL = "jdbc:h2:file:./build/db"
-//        val database = Database.connect(jdbcURL, driverClassName)
-
-
-
         transaction(database) {
             SchemaUtils.create(Users)
             SchemaUtils.create(Posts)

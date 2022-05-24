@@ -29,17 +29,15 @@ fun Route.authRoutes() {
     post("/register") {
         val newUser = call.receive<NewUser>()
         // todo: validate payload request here
-
-        val hashedPassword = BCrypt.withDefaults().hash(12, newUser.password.toByteArray())
+        val hashedPassword = BCrypt.withDefaults().hashToString(12, newUser.password.toCharArray())
         transaction {
             Users.insert {
-                it[username] = username
-                it[email] = email
+                it[username] = newUser.username
+                it[email] = newUser.email
                 it[password] = hashedPassword
             }
         }
-
-        //         val dbUser = userDSL.create(newUser.username, newUser.email, hashedPassword)
+        // val dbUser = userDSL.create(newUser.username, newUser.email, hashedPassword)
 
         val token = JWT.create()
             .withAudience(audience)
@@ -54,8 +52,10 @@ fun Route.authRoutes() {
         val authenticatingUser = call.receive<AuthenticatingUser>()
         // todo: validate payload request here
         val dbPassword = userDSL.getPassword(authenticatingUser.email)
-        val hashedPassword = BCrypt.withDefaults().hash(12, authenticatingUser.password.toByteArray())
-        val result: BCrypt.Result = BCrypt.verifyer().verify(dbPassword?.toByteArray(), hashedPassword)
+        val hashedPassword = BCrypt.withDefaults().hashToString(12, authenticatingUser.password.toCharArray())
+        val result: BCrypt.Result = BCrypt.verifyer().verify(dbPassword?.toCharArray(), hashedPassword)
+        call.application.environment.log.info(dbPassword)
+        call.application.environment.log.info(hashedPassword)
         if(!result.verified) {
             throw AuthorizationException("Sorry you are not authorized")
         }

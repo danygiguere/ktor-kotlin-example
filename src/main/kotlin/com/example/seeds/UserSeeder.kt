@@ -10,9 +10,9 @@ class UserSeeder() {
          val userDSL: UserDSL = UserDSL()
          runBlocking {
              if(userDSL.all().isEmpty()) {
-                 val password = "secret"
-                 val bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray())
-                 userDSL.create("johndoe", "johndoe@test.com", bcryptHashString)
+//                 val password = "secret"
+//                 val bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray())
+//                 userDSL.create("johndoe", "johndoe@test.com", bcryptHashString)
              }
          }
      }

@@ -33,7 +33,7 @@ class UserDSL {
         val insertStatement = Users.insert {
             it[Users.username] = username
             it[Users.email] = email
-            it[Users.password] = password.toString()
+            it[Users.password] = password
         }
         insertStatement.resultedValues?.singleOrNull()?.let(Users::resultRowToUser)
     }
