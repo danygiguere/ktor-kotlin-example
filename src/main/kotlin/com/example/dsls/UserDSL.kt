@@ -38,22 +38,23 @@ class UserDSL {
         insertStatement.resultedValues?.singleOrNull()?.let(Users::resultRowToUser)
     }
 
-    suspend fun update(id: Int, username: String, email: String, password: String): Boolean = dbQuery {
+    suspend fun update(id: Int, username: String, email: String): Boolean = dbQuery {
         Users.update({ Users.id eq id }) {
             it[Users.username] = username
             it[Users.email] = email
-            it[Users.password] = password
         } > 0
     }
+
+    //todo updatePassword function that takes password and password_confirmation parameters
 
     suspend fun delete(id: Int): Boolean = dbQuery {
         Users.deleteWhere { Users.id eq id } > 0
     }
 
-    suspend fun getPassword(email: String): String? = dbQuery {
+    suspend fun getHashedPassword(email: String): String? = dbQuery {
         Users
             .select { Users.email eq email }
-            .map(Users::getPassword)
+            .map(Users::getHashedPassword)
             .singleOrNull()
     }
 }

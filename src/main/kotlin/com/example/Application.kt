@@ -15,5 +15,5 @@ fun Application.module() {
     configureRouting()
     configureSerialization()
     configureSecurity()
-//    runSeeders()
+    runSeeders()
 }

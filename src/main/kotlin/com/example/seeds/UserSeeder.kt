@@ -7,12 +7,12 @@ import kotlinx.coroutines.runBlocking
 
 class UserSeeder() {
      fun run() {
-         val userDSL: UserDSL = UserDSL()
+         val userDSL = UserDSL()
          runBlocking {
              if(userDSL.all().isEmpty()) {
-//                 val password = "secret"
-//                 val bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray())
-//                 userDSL.create("johndoe", "johndoe@test.com", bcryptHashString)
+                 val password = "secret"
+                 val hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray())
+                 userDSL.create("johndoe", "johndoe@test.com", hashedPassword)
              }
          }
      }

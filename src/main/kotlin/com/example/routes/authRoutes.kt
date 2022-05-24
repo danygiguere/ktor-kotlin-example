@@ -6,7 +6,6 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.example.dsls.UserDSL
 import com.example.models.AuthenticatingUser
 import com.example.models.NewUser
-import com.example.models.Users
 import com.example.plugins.AuthorizationException
 import io.github.cdimascio.dotenv.Dotenv
 import io.ktor.server.application.*
@@ -15,8 +14,6 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
 fun Route.authRoutes() {
@@ -30,14 +27,7 @@ fun Route.authRoutes() {
         val newUser = call.receive<NewUser>()
         // todo: validate payload request here
         val hashedPassword = BCrypt.withDefaults().hashToString(12, newUser.password.toCharArray())
-        transaction {
-            Users.insert {
-                it[username] = newUser.username
-                it[email] = newUser.email
-                it[password] = hashedPassword
-            }
-        }
-        // val dbUser = userDSL.create(newUser.username, newUser.email, hashedPassword)
+        userDSL.create(newUser.username, newUser.email, hashedPassword)
 
         val token = JWT.create()
             .withAudience(audience)
@@ -51,11 +41,8 @@ fun Route.authRoutes() {
     post("/login") {
         val authenticatingUser = call.receive<AuthenticatingUser>()
         // todo: validate payload request here
-        val dbPassword = userDSL.getPassword(authenticatingUser.email)
-        val hashedPassword = BCrypt.withDefaults().hashToString(12, authenticatingUser.password.toCharArray())
-        val result: BCrypt.Result = BCrypt.verifyer().verify(dbPassword?.toCharArray(), hashedPassword)
-        call.application.environment.log.info(dbPassword)
-        call.application.environment.log.info(hashedPassword)
+        val dbPassword = userDSL.getHashedPassword(authenticatingUser.email)
+        val result: BCrypt.Result = BCrypt.verifyer().verify(authenticatingUser.password.toCharArray(), dbPassword)
         if(!result.verified) {
             throw AuthorizationException("Sorry you are not authorized")
         }

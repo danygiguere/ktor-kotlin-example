@@ -16,7 +16,7 @@ object Users : Table() {
         email = row[this.email]
     )
 
-    fun getPassword(row: ResultRow) = row[this.password]
+    fun getHashedPassword(row: ResultRow): String = row[this.password]
 }
 
 @Serializable
@@ -27,7 +27,6 @@ data class AuthenticatingUser(
 
 @Serializable
 data class NewUser(
-    val id: Int? = null,
     val username: String,
     val email: String,
     val password: String
