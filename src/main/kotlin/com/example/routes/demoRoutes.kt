@@ -6,7 +6,6 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.util.Identity.encode
 
 fun Route.demoRoutes() {
 
@@ -20,18 +19,6 @@ fun Route.demoRoutes() {
 
     get("/demo/text-response") {
         call.respondText("This is a text response from demoRoutes@/demo/text-response")
-    }
-
-    get("/demo/signed-url") {
-        // you must add the url param ?signature=$2a$12$DvbEVyvGzearyPn7.c0QQO1edR2R7zyo68Aso/qIntA3KI1mMCe82 for this route to respond successfully
-        // $2a$12$DvbEVyvGzearyPn7.c0QQO1edR2R7zyo68Aso/qIntA3KI1mMCe82 is the hashed route /demo/signed-url
-        // I need to replace the hash with an encryption because the hash is not url friendly (and ugly)
-        val signature = context.request.queryParameters["signature"]
-        val result: BCrypt.Result = BCrypt.verifyer().verify("/demo/signed-url".toCharArray(), signature)
-        if(!result.verified) {
-            throw AuthorizationException("Sorry you are not authorized")
-        }
-        call.respondText("This is a text response from demoRoutes@/demo/signed-url")
     }
 
     get("/demo/translation") {
@@ -57,6 +44,18 @@ fun Route.demoRoutes() {
 
     get("/demo/exposed") {
         call.respondText("This is a text response from demoRoutes@/exposed")
+    }
+
+    get("/demo/signed-url") {
+        // you must add the url param ?signature=$2a$12$DvbEVyvGzearyPn7.c0QQO1edR2R7zyo68Aso/qIntA3KI1mMCe82 for this route to respond successfully
+        // $2a$12$DvbEVyvGzearyPn7.c0QQO1edR2R7zyo68Aso/qIntA3KI1mMCe82 is the hashed route /demo/signed-url
+        // I need to replace the hash with an encryption because the hash is not url friendly (and ugly)
+        val signature = context.request.queryParameters["signature"]
+        val result: BCrypt.Result = BCrypt.verifyer().verify("/demo/signed-url".toCharArray(), signature)
+        if(!result.verified) {
+            throw AuthorizationException("Sorry you are not authorized")
+        }
+        call.respondText("This is a text response from demoRoutes@/demo/signed-url")
     }
 
 }
