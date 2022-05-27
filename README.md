@@ -32,10 +32,10 @@
 - create validation for the post model
 - install JWT
 - add .env for secrets
-- create a middleware
 - translate validation
 - create demos for logs
 - create `user has many posts` relationship
+- create exposed raw query:  It is not supported as part of the library but it is possible to implement -> https://github.com/JetBrains/Exposed/wiki/FAQ#q-is-it-possible-to-use-native-sql--sql-as-a-string
 
 #### In progress
 - refactor validators. in Validator.kt:
@@ -45,9 +45,8 @@
     - create Rule class and the rules like MaxLength will extend Rule
 
 #### Todo
-- create demos for joins, db transactions
-- create exposed raw query
 - figure out a way to remigrate the db and the seeds : https://medium.com/nerd-for-tech/an-opinionated-kotlin-backend-service-database-migration-orm-52527ce3228
+- create a middleware
 - create isAuthenticated middleware
 - install cors - https://ktor.io/docs/eap/cors.html#overview
 - create some tests

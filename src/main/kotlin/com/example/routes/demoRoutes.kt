@@ -1,11 +1,18 @@
 package com.example.routes
 
 import at.favre.lib.crypto.bcrypt.BCrypt
+import com.example.config.Database.database
+import com.example.models.Posts
+import com.example.models.Users
 import com.example.plugins.AuthorizationException
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.jetbrains.exposed.sql.IntegerColumnType
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Route.demoRoutes() {
 
@@ -40,10 +47,6 @@ fun Route.demoRoutes() {
         call.application.environment.log.info(call.parameters["id"])
         call.application.environment.log.info(call.parameters["name"]) //?name=john
         call.respondText("This is a text response from demoRoutes@/demo/logger")
-    }
-
-    get("/demo/exposed") {
-        call.respondText("This is a text response from demoRoutes@/exposed")
     }
 
     get("/demo/signed-url") {
