@@ -5,7 +5,7 @@ import com.example.models.*
 
 class CarDAO {
 
-    suspend fun all(): Iterable<Car> = dbQuery {
+    suspend fun all(): List<String> = dbQuery {
         CarEntity.all().map(CarEntity::toModel)
     }
 

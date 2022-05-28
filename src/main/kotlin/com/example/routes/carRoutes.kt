@@ -25,7 +25,7 @@ fun Route.carRoutes() {
         call.respond(carDAO.create(car))
     }
 
-    put("cars/{id}") {
+    put("/cars/{id}") {
         val id = call.parameters.getOrFail<Int>("id").toInt()
         val car = call.receive<NewCar>()
         call.respond(carDAO.update(id, car))

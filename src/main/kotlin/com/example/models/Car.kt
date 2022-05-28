@@ -1,5 +1,7 @@
 package com.example.models
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -16,7 +18,8 @@ class CarEntity(id: EntityID<Int>): IntEntity(id) {
     var name by Cars.name
     var year by Cars.year
 
-    fun toModel() = Car(id.value, name, year)
+    fun toModel() = Json.encodeToString(Car(id.value, name, year))
+
 }
 
 @Serializable
